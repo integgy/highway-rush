@@ -1,5 +1,5 @@
 class Car {
-    constructor({pos, vel, color,size}){
+    constructor({pos, vel, color, size}){
         this.pos = pos
         this.vel = vel
         this.color = color
@@ -13,8 +13,14 @@ class Car {
     }
 
     move() {
-        this.pos.y += .5
+        const randomMove = [.1,.2,.3,.4,.5]
+        function randomInt() { return Math.floor(Math.random() * randomMove.length)}
+
+        // this.pos.y += randomMove[randomInt()]
+        this.pos.y += 1
     }
+
+    // rest()
 
 
 }

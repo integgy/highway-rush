@@ -15,7 +15,7 @@ console.log("Webpack is running :)")
 // Player car
 const player = new Car({
     pos: {
-        x: canWidth/2,
+        x: middle,
         y: 500
     },
     size: {
@@ -27,12 +27,15 @@ const player = new Car({
 // Array of cars
 let carsArr = new Array(5)
 
-const carStartPos = [(middle - 200),(middle - 100),middle, (middle + 100), (middle + 200)]
+const carStartPosX = [(middle - 200),(middle - 100),middle, (middle + 100), (middle + 200)]
+const carStartPosY = [-100,-200,-300,-400,-500]
+function randomInt() {return Math.floor(Math.random() * carStartPosY.length)}
+
 for (let i = 0; i < carsArr.length; i++){
     carsArr[i] = new Car({
         pos: {
-            x: carStartPos[i],
-            y: 10
+            x: carStartPosX[randomInt()],
+            y: carStartPosY[randomInt()]
         },
         size: {
             l: 50,
@@ -46,9 +49,9 @@ for (let i = 0; i < carsArr.length; i++){
 
 
 
-function boxCollision(obj){
-    const playerRightSide = player.pos.x + player.h >= obj.pos.x
-    const playerLeftSide = player.pos.x <= obj.pos.x + obj.h
+function playerCollision(obj){
+    const playerRightSide = player.pos.x + player.l >= obj.pos.x
+    const playerLeftSide = player.pos.x <= obj.pos.x + obj.l
     const playerFrontSide = player.pos.y + player.h >= obj.pos.y
     const playerBackSide = player.pos.y <= obj.pos.y + obj.h
 
@@ -65,9 +68,6 @@ function boxCollision(obj){
 
 
 
-
-
-
 // Render map;
 let on = false;
 function animate() {
@@ -75,7 +75,11 @@ function animate() {
     c.clearRect(0, 0, canWidth, canHeight);
     carsArr.forEach(car => {
         car.draw(c);
-        boxCollision(car);
+        playerCollision(car);
+        if (car.pos.y > canHeight){
+            car.pos.x = carStartPosX[randomInt()]
+            car.pos.y = carStartPosY[randomInt()]
+        }
         if (on) car.move();
     })
     player.draw(c);
