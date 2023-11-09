@@ -1,11 +1,8 @@
 # highway-rush
 
-Backaround
-This is my first coding/javascript project. My vision for this project is to create a game called "highway rush".
-In this game you will be dodging cars on the highway. Trying to survive as long as possible. Your score will increase
-as you succfully dodge incoming cars. The key for surviving is to keep your car fueled up and avoid on coming traffic.
-Too much damage or running out of fuel will be the end of the game. The longer you survive, the incoming traffic will increase
-and the parrtern of the cars will become harder to navgate through.
+Background
+
+This is my first coding/JavaScript project. My vision for this project is to create a game called 'Highway Rush.' In this game, your objective is to navigate a busy highway, dodging cars to survive as long as possible. Your score increases as you successfully evade incoming cars. The key to survival is maintaining your car's fuel levels and avoiding oncoming traffic. If your car sustains too much damage or runs out of fuel, the game ends. The longer you survive, the traffic will become more challenging, and car patterns will become harder to navigate
 
 
 
@@ -18,7 +15,7 @@ In "Highway Rush," users will be able to:
 - Dodge Incoming Traffic: The game will feature a continuous stream of cars that users must dodge to avoid collisions.
 - Fuel Management: Players need to manage their car's fuel level, and running out of fuel will result in a game over.
 - Scoring System: Users will earn points for successfully dodging cars, and the score will increase as they survive longer.
-- Difficulty Progression: The game's difficulty will increase as time progresses, with faster traffic and more complex car patterns.
+- Difficulty Progression: The game's difficulty will increase as time progresses, with more traffic and more complex car patterns.
 
 ## Other Aspects of the Project
 
@@ -29,9 +26,44 @@ In addition, this project will include:
 - Audio Effects: The game will include audio effects, such as engine sounds, collision sounds, and background music.
 
 
-Implementation Timeline
+## Implementation Timeline
 
--Friday Afternoon & Weekend
- Work on testing/making canvas for the game. tryout different shapes, having the shapes move and have collsuion detechion
+
+### Friday Afternoon
+- Work on canvas creation and testing.
+- Experiment with shapes and their movement.
+- Implement collision detection for shapes.
+- Enable shapes to move continuously on the canvas.
+- Implement spawning of additional shapes as needed.
+
+### Weekend
+- Design the highway layout using Tiled map editor.
+- Select models for the player's car and incoming traffic.
+- Consider potential game elements.
+- Fit the highway layout onto the canvas.
+- Determine the appropriate sizes for game models.
+
+### Monday
+- Set up classes and functions for the highway, player car, incoming traffic, and game elements.
+- Establish the core game logic.
+
+### Tuesday
+- Implement interactions between game elements.
+- Track the player's score.
+- Include a mechanism for player damage caused by incoming cars.
+- Implement collecting fuel and fuel consumption.
+
+### Wednesday
+- Create visual elements for the player to monitor their current fuel level and score in the browser.
+- Design a start menu to inform users about gameplay, controls, and starting the game.
+
+### Thursday
+- Conduct comprehensive testing to ensure seamless gameplay.
+- Play through the game to identify logic or element issues.
+- Make necessary fixes and adjustments during testing.
+
+
+
+
 
 
