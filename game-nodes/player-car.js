@@ -1,14 +1,18 @@
-class Player {
-    constructor({pos, vel}){
+class Car {
+    constructor({pos, vel, color,size}){
         this.pos = pos
         this.vel = vel
+        this.color = color
+        this.l = size.l
+        this.h = size.h
     }
 
     draw(cxt) {
-        cxt.fillRect(this.pos.x, this.pos.y, 50, 70)
+        cxt.fillStyle = this.color
+        cxt.fillRect(this.pos.x, this.pos.y, this.l, this.h)
     }
 
 
 }
 
-module.exports = Player
+module.exports = Car
