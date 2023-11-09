@@ -1,4 +1,5 @@
-import Car from "../game-nodes/player-car"
+import Player from "../game-nodes/player-car"
+import NpcCar from "../game-nodes/incoming-traffic"
 
 const canvas = document.querySelector("canvas")
 const c = canvas.getContext("2d")
@@ -12,97 +13,79 @@ canvas.height = canHeight
 
 console.log("Webpack is running :)")
 
+
+
+
+
+
+
+
+
+
 // Player car
-const player = new Car({
-    pos: {
-        x: middle,
-        y: 500
-    },
-    size: {
-        l: 50,
-        h:70
-    },
-    color: "black"
-})
-// Array of cars
-let carsArr = new Array(5)
-
-const carStartPosX = [(middle - 200),(middle - 100),middle, (middle + 100), (middle + 200)]
-const carStartPosY = [-100,-200,-300,-400,-500]
-function randomInt() {return Math.floor(Math.random() * carStartPosY.length)}
-
-for (let i = 0; i < carsArr.length; i++){
-    carsArr[i] = new Car({
-        pos: {
-            x: carStartPosX[randomInt()],
-            y: carStartPosY[randomInt()]
-        },
-        size: {
-            l: 50,
-            h:70
-        },
-        color: "black"
-    })
-}
+const player = new Player(middle)
 
 
-
-
-
-function playerCollision(obj){
-    const playerRightSide = player.pos.x + player.l >= obj.pos.x
-    const playerLeftSide = player.pos.x <= obj.pos.x + obj.l
-    const playerFrontSide = player.pos.y + player.h >= obj.pos.y
-    const playerBackSide = player.pos.y <= obj.pos.y + obj.h
-
-    if (playerRightSide && playerLeftSide && playerFrontSide && playerBackSide) {
-        console.log("hit")
-        obj.color = "red";
-    } else {
-        obj.color = "black";
+function spawnPattern(car){
+    function randomInt()  {return Math.floor(Math.random() * 3)} 
+    const patternTwoCar = {
+        0: [[middle, -100], [middle + 100, -100]],
+        1: [[middle, -100], [middle, -200]],
+        2: [[middle, -100], [middle - 100, -100]]
     }
+
+
+    let randIdx = randomInt()
+    for (let i = 0; i < car.length; i++){
+        let x = patternTwoCar[randIdx][i][0]
+        let y = patternTwoCar[randIdx][i][1]
+        car[i].x = x
+        car[i].y = y
+    }
+
 }
 
-
-
-
-
+const npcCars = []
+function makeCar(n) {
+    n = new NpcCar()
+    return n
+}
+for (let i = 0; i < 2; i++){
+    npcCars.push(makeCar(i))
+}
 
 // Render map;
 let on = false;
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
-    carsArr.forEach(car => {
-        car.draw(c);
-        playerCollision(car);
-        if (car.pos.y > canHeight){
-            car.pos.x = carStartPosX[randomInt()]
-            car.pos.y = carStartPosY[randomInt()]
-        }
-        if (on) car.move();
-    })
-    player.draw(c);
+    let carsEnd = []
+    player.draw(c)
+    npcCars.forEach(car => {
+        car.draw(c)
+        if (on) car.move()
+        player.playerCollision(car)
+        if (car.end(canHeight)) carsEnd.push(car)
+    });
+    if (carsEnd.length > 1){
+        spawnPattern(carsEnd)
+        carsEnd = []
+    }
+    
+    player.playerCollision(npcCars[0])
+
 }
 animate()
 
 window.addEventListener("keydown", e => {
     switch (e.key) {
-        case "ArrowUp":
-            console.log("up");
-            player.pos.y -= 10;
-            break
-        case "ArrowDown":
-            console.log("down")
-            player.pos.y += 10
-            break
         case "ArrowLeft":
             console.log("left")
-            player.pos.x -= 10
+            player.x -= 10
             break
         case "ArrowRight":
             console.log("right")
-            player.pos.x += 10
+            player.x += 10
             break
     }
 

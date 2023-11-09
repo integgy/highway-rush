@@ -1,0 +1,41 @@
+[33mcommit 148ddf923f8578321e3d51387c40b29f5b65728c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Thu Nov 9 05:45:46 2023 -0800
+
+    cars able to respawn after reaching end
+
+[33mcommit daf8f5f5f129f111f8f22cae43a396f39d287ed8[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Thu Nov 9 03:20:55 2023 -0800
+
+    spawning more than one square
+
+[33mcommit 966d0bf92341e0d53675f0ac2a00a6d30049d420[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Thu Nov 9 02:18:52 2023 -0800
+
+    Working collision dectection
+
+[33mcommit 41de1368e6348b0c161a1d43b54e13d3c25dfa70[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Wed Nov 8 23:33:42 2023 -0800
+
+    Made moving sqaure
+
+[33mcommit 67e0a6bbc230e9348a10f170c8a295ccd68d8afd[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Wed Nov 8 22:15:18 2023 -0800
+
+    Setup Webpack
+
+[33mcommit bdc88e7b7ee5ab301139a45b829a49ab4eb5f5fe[m
+Author: integgy <matthewregidor@gmail.com>
+Date:   Wed Nov 8 20:15:32 2023 -0800
+
+    finished readme
+
+[33mcommit d70ad8207729711e047ce51506e9bfe4e1f761a0[m
+Author: Matthew Regidor <136542649+integgy@users.noreply.github.com>
+Date:   Wed Nov 8 21:16:32 2023 -0800
+
+    Create README.md

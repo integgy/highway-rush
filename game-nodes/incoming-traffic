@@ -1,0 +1,68 @@
+
+class NpcCar {
+    constructor(){
+        this.x = 0
+        this.y = 0
+        this.l = 50
+        this.h = 70
+        this.color = "black"
+    }
+
+    draw(cxt) {
+        cxt.fillStyle = this.color
+        cxt.fillRect(this.x, this.y, this.l, this.h)
+    }
+
+    move(){
+        this.y += 2
+    }
+
+    end(height){
+        if (this.y > height) return true
+    }
+
+    respawn(x, y){
+        this.x = x
+        this.y = y
+    }
+
+
+
+}
+
+module.exports = NpcCar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const carStartPosX = [(middle - 200),(middle - 100),middle, (middle + 100), (middle + 200)]
+// const carStartPosY = [-100,-200,-300,-400,-500]
+// function randomInt() {return Math.floor(Math.random() * carStartPosY.length)}
+
+// for (let i = 0; i < carsArr.length; i++){
+//     carsArr[i] = new Car({
+//         pos: {
+//             x: carStartPosX[randomInt()],
+//             y: carStartPosY[randomInt()]
+//         },
+//         size: {
+//             l: 50,
+//             h:70
+//         },
+//         color: "black"
+//     })
+// }

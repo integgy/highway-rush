@@ -1,28 +1,35 @@
-class Car {
-    constructor({pos, vel, color, size}){
-        this.pos = pos
-        this.vel = vel
-        this.color = color
-        this.l = size.l
-        this.h = size.h
+class Player {
+    constructor(x){
+        this.color = "black"
+        this.x = x
+        this.y = 500
+        this.l = 50
+        this.h = 70
+
     }
 
     draw(cxt) {
         cxt.fillStyle = this.color
-        cxt.fillRect(this.pos.x, this.pos.y, this.l, this.h)
+        cxt.fillRect(this.x, this.y, this.l, this.h)
     }
 
-    move() {
-        const randomMove = [.1,.2,.3,.4,.5]
-        function randomInt() { return Math.floor(Math.random() * randomMove.length)}
+    move(m) {
 
-        // this.pos.y += randomMove[randomInt()]
-        this.pos.y += 1
     }
 
-    // rest()
+    playerCollision(obj){
+        const playerRightSide = this.x + this.l >= obj.x
+        const playerLeftSide = this.x <= obj.x + obj.l
+        const playerFrontSide = this.y + this.h >= obj.y
+        const playerBackSide = this.y <= obj.y + obj.h
 
-
+        if (playerRightSide && playerLeftSide && playerFrontSide && playerBackSide) {
+            console.log("hit")
+            obj.color = "red";
+        } else {
+            obj.color = "black";
+        }
+    }
 }
 
-module.exports = Car
+module.exports = Player
