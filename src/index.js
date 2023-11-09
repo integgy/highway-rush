@@ -5,9 +5,11 @@ const c = canvas.getContext("2d")
 
 const canWidth = 1024
 const canHeight = 576
+const middle = canWidth/2
 
 canvas.width = canWidth
 canvas.height = canHeight
+
 console.log("Webpack is running :)")
 
 // Player car
@@ -22,30 +24,15 @@ const player = new Car({
     },
     color: "black"
 })
-
-const npcCar = new Car({
-    pos: {
-        x: canWidth/2,
-        y: 200
-    },
-    size: {
-        l: 50,
-        h:70
-    },
-    color: "black"
-    
-})
+// Array of cars
 let carsArr = new Array(5)
 
-// function boxCollision(obj1, obj2){
-//     if (obj1.pos.x + 50 >= canvas.width / 2 - 50)
-// }
-
-for (let i = 0; i < 5; i++){
+const carStartPos = [(middle - 200),(middle - 100),middle, (middle + 100), (middle + 200)]
+for (let i = 0; i < carsArr.length; i++){
     carsArr[i] = new Car({
         pos: {
-            x: canWidth/2,
-            y: 300
+            x: carStartPos[i],
+            y: 10
         },
         size: {
             l: 50,
@@ -57,26 +44,41 @@ for (let i = 0; i < 5; i++){
 
 
 
-carsArr[0].draw(c)
+
+
+function boxCollision(obj){
+    const playerRightSide = player.pos.x + player.h >= obj.pos.x
+    const playerLeftSide = player.pos.x <= obj.pos.x + obj.h
+    const playerFrontSide = player.pos.y + player.h >= obj.pos.y
+    const playerBackSide = player.pos.y <= obj.pos.y + obj.h
+
+    if (playerRightSide && playerLeftSide && playerFrontSide && playerBackSide) {
+        console.log("hit")
+        obj.color = "red";
+    } else {
+        obj.color = "black";
+    }
+}
 
 
 
-// Render map
+
+
+
+
+
+
+// Render map;
+let on = false;
 function animate() {
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
-    carsArr[0].draw(c);
-    npcCar.draw(c);
+    carsArr.forEach(car => {
+        car.draw(c);
+        boxCollision(car);
+        if (on) car.move();
+    })
     player.draw(c);
-    if (player.pos.x + 50 >= npcCar.pos.x && 
-        player.pos.x <= npcCar.pos.x + 50 &&
-        player.pos.y + 70 >= npcCar.pos.y &&
-        player.pos.y <= npcCar.pos.y + 70) {
-        console.log("hit")
-        npcCar.color = "red"
-    } else {
-        npcCar.color = "black"
-    }
 }
 animate()
 
@@ -104,4 +106,9 @@ window.addEventListener("keydown", e => {
 
 window.addEventListener("click", e => {
     console.log(e)
+})
+
+const startButton = document.querySelector('#start')
+startButton.addEventListener("click", e =>{
+    if (e.target.value) on = !on
 })

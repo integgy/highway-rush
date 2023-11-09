@@ -12,6 +12,10 @@ class Car {
         cxt.fillRect(this.pos.x, this.pos.y, this.l, this.h)
     }
 
+    move() {
+        this.pos.y += .5
+    }
+
 
 }
 
