@@ -2,7 +2,7 @@
 class NpcCar {
     constructor(){
         this.x = 0
-        this.y = 0
+        this.y = 600
         this.l = 50
         this.h = 70
         this.color = "black"
@@ -14,7 +14,7 @@ class NpcCar {
     }
 
     move(){
-        this.y += 2
+        this.y += 3
     }
 
     end(height){
