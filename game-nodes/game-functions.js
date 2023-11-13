@@ -82,14 +82,21 @@ function gameDetails(cxt, score, lives, fuel){
 function gameOver(cxt, score){
     cxt.font = "48px serif";
     cxt.fillStyle = "black"
-    cxt.fillText("Game Over", middle - 80, 200);
+    cxt.fillText("Game Over", middle - 80, 300);
 
     cxt.font = "48px serif";
     cxt.fillStyle = "black"
-    cxt.fillText(`Your Score: ${score}`, middle - 100, 250);
+    cxt.fillText(`Your Score: ${score}`, middle - 100, 350);
 
 
 }
+
+// function increaseDifficulty(score, vel){
+//     const levels = {
+//         10: 0.5,
+//         15: 
+//     }
+// }
 
 module.exports = {
     canHeight,
@@ -100,5 +107,6 @@ module.exports = {
     randomXPos,
     gameDetails,
     randomInt,
-    gameOver
+    gameOver,
+    // increaseDifficulty
 }

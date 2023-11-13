@@ -4,7 +4,7 @@ const { randomXPos } = require("./game-functions")
 class FuelTank {
     constructor(){
         this.x = (randomXPos() + 15)
-        this.y = -125
+        this.y = -300
         this.l = 25
         this.h = 25
         this.color = "red"
@@ -26,11 +26,11 @@ class FuelTank {
 
     respawn(){
         this.x = (randomXPos() + 15)
-        this.y = -125
+        this.y = -300
     }
 
     passedGate() {
-        if (this.y === 100){
+        if (this.y === 225){
          return true
         } else {
          return false
@@ -40,11 +40,13 @@ class FuelTank {
     collision(obj){
         const RightSide = this.x + this.l >= obj.x
         const LeftSide = this.x <= obj.x + obj.l
-        const FrontSide = this.y + (this.h + 10) >= obj.y
+        const FrontSide = this.y + this.h >= obj.y
         const BackSide = this.y <= obj.y + obj.h
-
+        
         if (RightSide && LeftSide && FrontSide && BackSide) {
             return true
+        } else {
+            return false
         }
     }
 

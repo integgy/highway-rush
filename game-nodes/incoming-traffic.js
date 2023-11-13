@@ -3,7 +3,7 @@ const { canHeight } = require("./game-functions")
 class NpcCar {
     constructor(){
         this.x = randomXPos()
-        this.y = -100
+        this.y = -150
         this.l = 50
         this.h = 70
         this.color = "black"
@@ -25,11 +25,11 @@ class NpcCar {
 
     respawn(){
         this.x = randomXPos()
-        this.y = -100
+        this.y = -250
     }
 
     passedGate() {
-        if (this.y === 100){
+        if (this.y === 200){
          return true
         } else {
          return false
