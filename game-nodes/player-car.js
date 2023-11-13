@@ -24,11 +24,7 @@ class Player {
         const playerBackSide = this.y <= obj.y + obj.h
 
         if (playerRightSide && playerLeftSide && playerFrontSide && playerBackSide) {
-            console.log("hit")
-            obj.color = "red";
             return true
-        } else {
-            obj.color = "black";
         }
     }
 }

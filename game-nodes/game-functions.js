@@ -1,10 +1,18 @@
-import { middle, canHeight, canWidth } from "../src";
 
-export function randomInt(max)  {
+const canWidth = 1024
+const canHeight = 576
+const middle = canWidth/2
+
+function randomInt(max)  {
     return Math.floor(Math.random() * max)
 }
 
-export function lanes(cxt){
+function randomXPos(){
+    const xArr = [middle - 200, middle - 100, middle, middle + 100, middle + 200]
+    return xArr[randomInt(xArr.length)]
+}
+
+function lanes(cxt){
     cxt.beginPath();
     cxt.setLineDash([10, 15]);
     cxt.moveTo(middle + 175,0);
@@ -32,7 +40,7 @@ export function lanes(cxt){
 
 
 
-export function edges(cxt){
+function edges(cxt){
     //Left boundary
     cxt.beginPath();
     cxt.setLineDash([]);
@@ -57,13 +65,27 @@ export function edges(cxt){
 
 }
 
-export function gameDetails(cxt, score, lives, fuel){
+function gameDetails(cxt, score, lives, fuel){
     cxt.font = "48px serif";
+    cxt.fillStyle = "black"
     cxt.fillText(`Score: ${score}`, 10, 50);
 
     cxt.font = "48px serif";
+    cxt.fillStyle = "black"
     cxt.fillText(`Lives: ${lives}`, 10, 100);
 
     cxt.font = "48px serif";
+    cxt.fillStyle = "black"
     cxt.fillText(`Fuel: ${fuel}%`, 10, 150);
+}
+
+module.exports = {
+    canHeight,
+    canWidth,
+    middle,
+    edges,
+    lanes,
+    randomXPos,
+    gameDetails,
+    randomInt
 }
