@@ -1,8 +1,8 @@
 class Player {
-    constructor(x){
-        this.color = "black"
+    constructor(x, y){
+        this.color = "blue"
         this.x = x
-        this.y = 500
+        this.y = y
         this.l = 50
         this.h = 70
 

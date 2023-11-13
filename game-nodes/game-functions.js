@@ -1,6 +1,6 @@
 
 const canWidth = 1024
-const canHeight = 576
+const canHeight = 700
 const middle = canWidth/2
 
 function randomInt(max)  {
@@ -79,6 +79,18 @@ function gameDetails(cxt, score, lives, fuel){
     cxt.fillText(`Fuel: ${fuel}%`, 10, 150);
 }
 
+function gameOver(cxt, score){
+    cxt.font = "48px serif";
+    cxt.fillStyle = "black"
+    cxt.fillText("Game Over", middle - 80, 200);
+
+    cxt.font = "48px serif";
+    cxt.fillStyle = "black"
+    cxt.fillText(`Your Score: ${score}`, middle - 100, 250);
+
+
+}
+
 module.exports = {
     canHeight,
     canWidth,
@@ -87,5 +99,6 @@ module.exports = {
     lanes,
     randomXPos,
     gameDetails,
-    randomInt
+    randomInt,
+    gameOver
 }

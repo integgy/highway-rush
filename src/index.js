@@ -1,17 +1,12 @@
 import Player from "../game-nodes/player-car"
 import NpcCar from "../game-nodes/incoming-traffic.js"
-import Fuel from "../game-nodes/fuel.js"
-import { lanes, edges, gameDetails} from "../game-nodes/game-functions"
+import { lanes, edges, gameOver, gameDetails} from "../game-nodes/game-functions"
 import { canHeight, canWidth, middle } from "../game-nodes/game-functions"
 import FuelTank from "../game-nodes/fuel.js"
 
 
 const canvas = document.querySelector("canvas")
 const c = canvas.getContext("2d")
-
-// export const canWidth = 1024
-// export const canHeight = 576
-// export const middle = canWidth/2
 
 
 canvas.width = canWidth
@@ -21,42 +16,49 @@ console.log("Webpack is running :)")
 
 
 // Player car
-const player = new Player(middle)
+const player = new Player(middle, canHeight - 100)
 let score = 0;
 let lives = 5;
 let fuel = 100;
+let vel = 1
 
 
 
-let on = false;
+
 const carsInPlay = [new NpcCar()]
 const fuelTanks = []
-let timer = 0
+
 
 //Fuel timer
 setInterval(() => {
-    if (on) fuel -= 5
+    if (on) {
+        fuel -= 5
+        if (carsInPlay.length > 7)vel += .5
+    }
 }, 5000); 
    
 
 
 // render Map and game logic
+let on = false;
+let running = true;
 function animate() {
-    requestAnimationFrame(animate);
+    if (lives === 0 || fuel === 0) running = false
+    if (running) requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
+    if (!running) gameOver(c, score)
     edges(c);
     lanes(c);
     gameDetails(c, score, lives, fuel)
-    if (fuel === 85 && fuelTanks.length < 1) fuelTanks.push(new FuelTank());
+    if (fuel === 80 && fuelTanks.length < 1) fuelTanks.push(new FuelTank());
 
     player.draw(c);
     carsInPlay.forEach(car => {
         let carIdx = carsInPlay.indexOf(car); 
         car.draw(c);
-        if (on) car.move();
+        if (on) car.move(vel);
         if (car.passedGate()) {
-            if (carsInPlay.length < 7) carsInPlay.push(new NpcCar());
-            // if (fuelTanks.length < 1) fuelTanks.push(new FuelTank());
+            if (carsInPlay.length < 8) carsInPlay.push(new NpcCar());
         }
             
     
@@ -74,17 +76,18 @@ function animate() {
     fuelTanks.forEach(tank => {
         let tankIdx = fuelTanks.indexOf(tank);
         tank.draw(c);
-        if (on) tank.move();
+        if (on) tank.move(vel);
         
-        if (tank.passedGate() && fuelTanks.length < 5) fuelTanks.push(new FuelTank());
+        if (tank.passedGate() && fuelTanks.length < 6) fuelTanks.push(new FuelTank());
 
+        
         carsInPlay.forEach(car => {
             if (tank.collision(car)) tank.respawn()
         })
 
         if (player.playerCollision(tank)) {
-            fuelTanks.splice(tankIdx, 1);
-            if (fuel !== 100) fuel += 5;
+            tank.respawn();
+            if (fuel < 100) fuel += 5;
         }
 
         if (tank.end(canHeight)) {
@@ -92,12 +95,11 @@ function animate() {
         }
 
     })
-    
+
 
 }
 
 animate();
-
 
 window.addEventListener("keydown", e => {
     switch (e.key) {

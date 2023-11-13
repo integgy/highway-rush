@@ -1,5 +1,6 @@
 const { randomXPos } = require("./game-functions")
 
+
 class FuelTank {
     constructor(){
         this.x = (randomXPos() + 15)
@@ -14,8 +15,8 @@ class FuelTank {
         cxt.fillRect(this.x, this.y, this.l, this.h)
     }
 
-    move(){
-        this.y += 1
+    move(vel){
+        this.y += vel
     }
     
     end(height){        
@@ -29,7 +30,7 @@ class FuelTank {
     }
 
     passedGate() {
-        if (this.y === 150){
+        if (this.y === 100){
          return true
         } else {
          return false
@@ -39,7 +40,7 @@ class FuelTank {
     collision(obj){
         const RightSide = this.x + this.l >= obj.x
         const LeftSide = this.x <= obj.x + obj.l
-        const FrontSide = this.y + this.h >= obj.y
+        const FrontSide = this.y + (this.h + 10) >= obj.y
         const BackSide = this.y <= obj.y + obj.h
 
         if (RightSide && LeftSide && FrontSide && BackSide) {

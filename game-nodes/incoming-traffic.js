@@ -1,5 +1,5 @@
 const { randomXPos } = require("./game-functions")
-
+const { canHeight } = require("./game-functions")
 class NpcCar {
     constructor(){
         this.x = randomXPos()
@@ -14,8 +14,8 @@ class NpcCar {
         cxt.fillRect(this.x, this.y, this.l, this.h)
     }
 
-    move(){
-        this.y += 1
+    move(vel){
+        this.y += vel
     }
 
     end(height){        
