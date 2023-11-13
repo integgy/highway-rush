@@ -2,6 +2,7 @@ import Player from "../game-nodes/player-car"
 import NpcCar from "../game-nodes/incoming-traffic"
 
 
+
 const canvas = document.querySelector("canvas")
 const c = canvas.getContext("2d")
 
@@ -26,6 +27,7 @@ console.log("Webpack is running :)")
 
 // Player car
 const player = new Player(middle)
+let score = 0
 
 
 function spawnPattern(car){
@@ -64,6 +66,7 @@ function spawnPattern(car){
     // return pattern[randIdx].length
 
 }
+
 function edges(){
     c.beginPath();
     c.moveTo(middle - 225,0)
@@ -75,56 +78,59 @@ function edges(){
     c.lineTo(middle + 275,canHeight);
     c.stroke();
 
+    c.beginPath();
+    c.moveTo(middle + 275, 100)
+    c.lineTo(287, 100);
+    c.stroke();
+
+    c.font = "48px serif";
+    c.fillText(`Score: ${score}`, 10, 50);
+
 
 }
 
 
 
-const npcCars = []
-function makeCar(n) {
-    n = new NpcCar()
-    return n
+function passedGate(car) {
+   if (car.y === 100){
+    return true
+   } else {
+    return false
+   }
 }
-function loadCars(){
-    for (let i = 0; i < 6; i++){
-    npcCars.push(makeCar(i))
-    }
-
-    // setTimeout(() => {
-    //     for (let i = 3; i < 6; i++){
-    //         npcCars.push(makeCar(i))
-    //     }
-    // }, 6000);
-
-    // setTimeout(() => {
-    //     for (let i = 3; i < 6; i++){
-    //         npcCars.push(makeCar(i))
-    //     }
-    // }, 12000);
-}
-
 
 // Render map;
-loadCars()
+const carsInPlay = [new NpcCar()]
+const carsStart = []
 function animate() {
     requestAnimationFrame(animate);    
     c.clearRect(0, 0, canWidth, canHeight);
     edges()
-    let carsEnd = []
     player.draw(c)
-    npcCars.forEach(car => {
+    carsInPlay.forEach(car => {
+        let carIdx = carsInPlay.indexOf(car)
+        if (passedGate(car) && carsInPlay.length != 9) carsInPlay.push(new NpcCar())
         car.draw(c)
         if (on) car.move()
-        player.playerCollision(car)
-        if (car.end(canHeight)) carsEnd.push(car)
+        if (player.playerCollision(car)) carsInPlay.splice(carIdx, 1)
+        if (car.end(canHeight)) {
+            score += 1
+            car.respawn()
+        }
     });
     
-    if (carsEnd.length > 2) {
-        spawnPattern(carsEnd)
-        carsEnd.slice(0, 3)
-    }
+
+
+    // if (carsStart.length > 2) {
+    //     spawnPattern(carsStart)
+    //     carsStart.slice(0, 3)
+    // }
+
+    
 }
+
 animate()
+
 
 window.addEventListener("keydown", e => {
     switch (e.key) {
