@@ -3,11 +3,15 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    
 }
-/* button {
-    width: 30px;
-} */
+button {
+    margin-left: 30vh;
+    margin-right: 30vh;
+}
 
 canvas {
     background-color: white;
+    margin-left: 30vh;
+    margin-right: 30vh;
 }
