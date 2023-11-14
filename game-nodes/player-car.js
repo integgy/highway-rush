@@ -1,16 +1,25 @@
 class Player {
-    constructor(x, y){
+    constructor(x, y, img){
         this.color = "blue"
         this.x = x
         this.y = y
         this.l = 50
-        this.h = 70
+        this.h = 90
+        this.image = img
 
     }
 
     draw(cxt) {
-        cxt.fillStyle = this.color
-        cxt.fillRect(this.x, this.y, this.l, this.h)
+        // cxt.fillStyle = this.color
+        // cxt.fillRect(this.x, this.y, this.l, this.h)
+        cxt.drawImage(
+            this.image,
+            this.x-49,
+            this.y-10,
+            150,
+            125
+
+        )
     }
 
     move(m) {

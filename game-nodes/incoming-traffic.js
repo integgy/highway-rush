@@ -1,17 +1,26 @@
 const { randomXPos } = require("./game-functions")
 const { canHeight } = require("./game-functions")
 class NpcCar {
-    constructor(){
+    constructor(img){
         this.x = randomXPos()
-        this.y = -150
+        this.y = -175
         this.l = 50
-        this.h = 70
+        this.h = 90
         this.color = "black"
+        this.image = img
     }
 
     draw(cxt) {
-        cxt.fillStyle = this.color
-        cxt.fillRect(this.x, this.y, this.l, this.h)
+        // cxt.fillStyle = this.color
+        // cxt.fillRect(this.x, this.y, this.l, this.h)
+        cxt.drawImage(
+            this.image,
+            this.x-44,
+            this.y-17,
+            150,
+            125
+
+        )
     }
 
     move(vel){
@@ -25,11 +34,13 @@ class NpcCar {
 
     respawn(){
         this.x = randomXPos()
-        this.y = -250
+        this.y = -225
     }
 
-    passedGate() {
-        if (this.y === 200){
+    passedGate(vel) {
+        const y = Math.floor(this.y/vel)
+        const gate = Math.floor(200/vel)
+        if (y === gate){
          return true
         } else {
          return false

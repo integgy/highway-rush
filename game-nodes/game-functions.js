@@ -1,14 +1,14 @@
 
 const canWidth = 1024
 const canHeight = 700
-const middle = canWidth/2
+const middle = canWidth/2 - 50/2
 
 function randomInt(max)  {
     return Math.floor(Math.random() * max)
 }
 
 function randomXPos(){
-    const xArr = [middle - 200, middle - 100, middle, middle + 100, middle + 200]
+    const xArr = [middle - 235, middle - 120, middle, middle + 120, middle + 235]
     return xArr[randomInt(xArr.length)]
 }
 

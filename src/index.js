@@ -1,6 +1,6 @@
 import Player from "../game-nodes/player-car"
 import NpcCar from "../game-nodes/incoming-traffic.js"
-import { lanes, edges, gameOver, gameDetails} from "../game-nodes/game-functions"
+import { randomInt, gameOver, gameDetails} from "../game-nodes/game-functions"
 import { canHeight, canWidth, middle } from "../game-nodes/game-functions"
 import FuelTank from "../game-nodes/fuel.js"
 
@@ -15,9 +15,34 @@ canvas.height = canHeight
 
 console.log("Webpack is running :)")
 
+const background = new Image()
+background.src = "../game_imgs/highway_img.png"
 
+const truck = new Image()
+truck.src = "../game_imgs/Mini_truck.png"
+
+const taxi = new Image()
+taxi.src = "../game_imgs/taxi.png"
+
+const semiTruck = new Image()
+semiTruck.src = "../game_imgs/truck.png"
+
+const police = new Image()
+police.src = "../game_imgs/Police.png"
+
+const redCar = new Image()
+redCar.src = "../game_imgs/Audi.png"
+
+const carImgs = [truck,taxi,semiTruck,police,redCar]
+
+function makeRandomCar(){
+    const randomImg = carImgs[randomInt(carImgs.length)]
+    return new NpcCar(randomImg)
+}
 // Player car
-const player = new Player(middle, canHeight - 100)
+const carImg = new Image()
+carImg.src = "../game_imgs/Car.png"
+const player = new Player(middle, canHeight - 125, carImg)
 let score = 0;
 let lives = 5;
 let fuel = 100;
@@ -26,10 +51,10 @@ let vel = 1
 //Fuel timer
 setInterval(() => {
     if (on) {
-        fuel -= 5
-        if (vel > 4) fuel -= 5
+        fuel -= 1
+        if (vel > 4) fuel -= 1
     }
-}, 5000);
+}, 1000);
 
 const levels = {
     10: 1.5,
@@ -63,17 +88,17 @@ let on = false;
 let running = true;
 let amountOfCars = 1
 let gatePasses = 0
+
 function animate() {
-    if (carsInPlay.length < 8) carsInPlay.push(new NpcCar())
-    if (lives < 1 || fuel === 0) running = false
+    if (carsInPlay.length < 8) carsInPlay.push(makeRandomCar())
+    if (lives < 1 || fuel < 1) running = false
     if (running) requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
-    if (!running) gameOver(c, score)
-    edges(c);
-    lanes(c);
+    c.drawImage(background, 0, 0, canWidth, canHeight);
+    if (!running) gameOver(c, score);
+    
     gameDetails(c, score, lives, fuel)
     if (fuel === 80 && fuelTanks.length < 1) fuelTanks.push(new FuelTank());
-    if (levels[score]) vel = levels[score]
     if (keys.left.pressed) player.x -= 5
     if (keys.right.pressed) player.x += 5
     player.draw(c);
@@ -81,7 +106,7 @@ function animate() {
         const car = carsInPlay[i]; 
         car.draw(c);
         if (on) car.move(vel);
-        if (car.passedGate()) {
+        if (car.passedGate(vel)) {
             if (amountOfCars < 8) amountOfCars++;
             gatePasses += 1
             if (gatePasses === 3){
@@ -96,12 +121,12 @@ function animate() {
             carsInPlay.splice(i, 1);
             lives -= 1;
         }
+
         if (car.end(canHeight)) {
             score += 1;
             car.respawn();
+            if (levels[score]) vel = levels[score];
         }
-
-        car.draw(c);
                 
     }
 
