@@ -1,9 +1,10 @@
 const { randomXPos } = require("./game-functions")
 const { canHeight } = require("./game-functions")
+const { xArr } = require("./game-functions")
 class NpcCar {
     constructor(img){
         this.x = randomXPos()
-        this.y = -175
+        this.y = -100
         this.l = 50
         this.h = 90
         this.color = "black"
@@ -34,7 +35,7 @@ class NpcCar {
 
     respawn(){
         this.x = randomXPos()
-        this.y = -225
+        this.y = -300
     }
 
     passedGate(vel) {
@@ -46,6 +47,19 @@ class NpcCar {
          return false
         }
      }
+
+    collision(obj){
+        const RightSide = this.x + this.l >= obj.x
+        const LeftSide = this.x <= obj.x + obj.l
+        const FrontSide = this.y + (this.h + 15) >= obj.y
+        const BackSide = this.y <= obj.y + (obj.h + 15)
+        
+        if (RightSide && LeftSide && FrontSide && BackSide) {
+            return true
+        } else {
+            return false
+        }
+    }
 
 
 }

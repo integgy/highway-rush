@@ -2,14 +2,23 @@
 const canWidth = 1024
 const canHeight = 700
 const middle = canWidth/2 - 50/2
-
+const xArr = [middle - 235, middle - 120, middle, middle + 120, middle + 235]
 function randomInt(max)  {
     return Math.floor(Math.random() * max)
 }
 
 function randomXPos(){
-    const xArr = [middle - 235, middle - 120, middle, middle + 120, middle + 235]
     return xArr[randomInt(xArr.length)]
+}
+
+function uniqueInt(max, previous) {
+    let randomNum;
+    
+    do {
+        randomNum = Math.floor(Math.random() * max);
+    } while (randomNum === previous);
+
+    return randomNum;
 }
 
 function lanes(cxt){
@@ -108,5 +117,6 @@ module.exports = {
     gameDetails,
     randomInt,
     gameOver,
-    // increaseDifficulty
+    uniqueInt,
+    xArr
 }
