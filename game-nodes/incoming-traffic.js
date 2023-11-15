@@ -6,7 +6,7 @@ class NpcCar {
         this.l = 50
         this.h = 90
         this.x = randomXPos(this.l)
-        this.y = -100
+        this.y = -300
         this.color = "black"
         this.image = img
     }
@@ -40,7 +40,7 @@ class NpcCar {
 
     passedGate(vel) {
         const y = Math.floor(this.y/vel)
-        const gate = Math.floor(200/vel)
+        const gate = Math.floor(100/vel)
         if (y === gate){
          return true
         } else {

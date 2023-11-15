@@ -39,9 +39,17 @@ blackCar.src = "../game_imgs/Black_viper.png"
 const gasTank = new Image()
 gasTank.src = "../game_imgs/gas_tank.png"
 
-const carImgs = [truck,blackCar,redCar]
+const carImgs = [
+    blackCar,
+    redCar,
+    semiTruck,
+    truck,
+    police,
+    taxi,
+]
 
 function makeRandomCar(){
+
     const randomImg = carImgs[randomInt(carImgs.length)]
     return new NpcCar(randomImg)
 }
@@ -94,16 +102,14 @@ const keys = {
 // render Map and game logic
 const carsInPlay = [
     new NpcCar(taxi),
-    new NpcCar(semiTruck),
-    new NpcCar(police)
+    // new NpcCar(semiTruck),
+    // new NpcCar(police)
 ]
 const fuelTanks = []
 let on = false;
 let running = true;
-let amountOfCars = 1;
-let gatePasses = 0;
+let gatePasses = null;
 function animate() {
-    if (carsInPlay.length < 7) carsInPlay.push(makeRandomCar())
     if (lives < 1 || fuel < 1) running = false
     if (running) requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
@@ -120,22 +126,28 @@ function animate() {
         if (player.x < middle + 240)player.x += 5
     }
    
-    for (let i = 0; i < amountOfCars; i++){
+    for (let i = 0; i < carsInPlay.length; i++){
         const car = carsInPlay[i];
         car.draw(c);
-        if (on) car.move(vel);
+        if (on) car.move(vel)
         if (car.passedGate(vel)) {
-            if (amountOfCars < carsInPlay.length) amountOfCars++;
             gatePasses++;
-            if (gatePasses % 4 === 0){
-            if (fuelTanks.length < 4) fuelTanks.push(new FuelTank(gasTank));
+            if (carsInPlay.length < 8) {
+                if (carsInPlay.length > 6){
+                    if (gatePasses % 3 === 0) carsInPlay.push(makeRandomCar())
+                } else {
+                    carsInPlay.push(new NpcCar(carImgs[i]))
+                }
+            }
+            if (gatePasses % 4 === 0)   {
+                if (fuelTanks.length < 4) fuelTanks.push(new FuelTank(gasTank));
         }
         }
 
         
 
         let overLapCheck = carsInPlay.filter(ele => ele !== car)
-        if (gatePasses > 0){
+        if (carsInPlay.length > 2){
             for (let i = 0; i < overLapCheck.length; i++){
             if (car.collision(overLapCheck[i])){
                 car.respawn();
@@ -147,7 +159,6 @@ function animate() {
     
         if (player.playerCollision(car)) {
             carsInPlay.splice(i, 1);
-            amountOfCars--
             lives -= 1;
         }
 
@@ -160,16 +171,16 @@ function animate() {
     }
 
 
+
     fuelTanks.forEach(tank => {
         let tankIdx = fuelTanks.indexOf(tank);
         tank.draw(c);
         if (on) tank.move(vel);
 
-        for (let i = 0; i < amountOfCars; i++){
+        for (let i = 0; i < carsInPlay.length; i++){
             const car = carsInPlay[i]
             if (tank.collision(car)) {
                 fuelTanks.splice(tankIdx, 1)
-                break
             }
         };
 

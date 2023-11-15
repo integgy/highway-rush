@@ -17,8 +17,8 @@ header{
 #game {
     display: flex;
     flex-direction: column;
-    margin-left: 40vh;
-    margin-right: 40vh;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .title {
