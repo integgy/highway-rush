@@ -1,10 +1,10 @@
 class Player {
     constructor(x, y, img){
         this.color = "blue"
-        this.x = x
-        this.y = y
         this.l = 50
         this.h = 90
+        this.x = x - (this.l/2)
+        this.y = y
         this.image = img
 
     }
@@ -18,7 +18,6 @@ class Player {
             this.y-10,
             150,
             125
-
         )
     }
 

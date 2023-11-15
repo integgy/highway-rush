@@ -1,13 +1,22 @@
 
 const canWidth = 1024
 const canHeight = 700
-const middle = canWidth/2 - 50/2
-const xArr = [middle - 235, middle - 120, middle, middle + 120, middle + 235]
+const middle = canWidth/2
+
+
+
 function randomInt(max)  {
     return Math.floor(Math.random() * max)
 }
 
-function randomXPos(){
+function randomXPos(item){
+    const xArr = [
+        middle - (item/2) - 235,
+        middle - (item/2) - 120, 
+        middle - (item/2), 
+        middle - (item/2) + 120, 
+        middle - (item/2) + 235
+    ]
     return xArr[randomInt(xArr.length)]
 }
 
@@ -117,6 +126,5 @@ module.exports = {
     gameDetails,
     randomInt,
     gameOver,
-    uniqueInt,
-    xArr
+    uniqueInt
 }

@@ -1,12 +1,12 @@
 const { randomXPos } = require("./game-functions")
 const { canHeight } = require("./game-functions")
-const { xArr } = require("./game-functions")
+
 class NpcCar {
     constructor(img){
-        this.x = randomXPos()
-        this.y = -100
         this.l = 50
         this.h = 90
+        this.x = randomXPos(this.l)
+        this.y = -100
         this.color = "black"
         this.image = img
     }
@@ -34,7 +34,7 @@ class NpcCar {
     }
 
     respawn(){
-        this.x = randomXPos()
+        this.x = randomXPos(this.l)
         this.y = -300
     }
 

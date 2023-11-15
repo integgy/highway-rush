@@ -36,7 +36,10 @@ redCar.src = "../game_imgs/Audi.png"
 const blackCar = new Image()
 blackCar.src = "../game_imgs/Black_viper.png"
 
-const carImgs = [truck,taxi,blackCar,redCar]
+const gasTank = new Image()
+gasTank.src = "../game_imgs/gas_tank.png"
+
+const carImgs = [truck,blackCar,redCar]
 
 function makeRandomCar(){
     const randomImg = carImgs[randomInt(carImgs.length)]
@@ -56,11 +59,12 @@ setInterval(() => {
     if (on) {
         fuel -= 1
         if (vel > 4) fuel -= 1
+        if (vel > 6) fuel -= 1
     }
 }, 1000);
 
 const levels = {
-    10: 1.5,
+    8: 1.5,
     15: 2,
     20: 2.5,
     30: 3,
@@ -70,7 +74,10 @@ const levels = {
     70: 5,
     100: 5.5,
     120: 6,
-    200: 7
+    150: 7,
+    200: 7.5,
+    300: 8
+
 }
    
 // Movement
@@ -95,7 +102,6 @@ let on = false;
 let running = true;
 let amountOfCars = 1;
 let gatePasses = 0;
-let prevIdx = null;
 function animate() {
     if (carsInPlay.length < 7) carsInPlay.push(makeRandomCar())
     if (lives < 1 || fuel < 1) running = false
@@ -103,39 +109,45 @@ function animate() {
     c.clearRect(0, 0, canWidth, canHeight);
     c.drawImage(background, 0, 0, canWidth, canHeight);
     if (!running) gameOver(c, score);
-    
-    gameDetails(c, score, lives, fuel)
-    if (fuel === 80 && fuelTanks.length < 1) fuelTanks.push(new FuelTank());
-    if (keys.left.pressed) player.x -= 5
-    if (keys.right.pressed) player.x += 5
     player.draw(c);
+    gameDetails(c, score, lives, fuel)
+    if (fuel < 90 && fuelTanks.length < 1) fuelTanks.push(new FuelTank(gasTank));
+
+    if (keys.left.pressed) {
+        if (player.x > middle - 290) player.x -= 5
+    }
+    if (keys.right.pressed) {
+        if (player.x < middle + 240)player.x += 5
+    }
+   
     for (let i = 0; i < amountOfCars; i++){
-        // const idx = uniqueInt(5, prevIdx)
-        // prevIdx = idx
         const car = carsInPlay[i];
         car.draw(c);
         if (on) car.move(vel);
         if (car.passedGate(vel)) {
-            if (amountOfCars < 7) amountOfCars++;
-            gatePasses += 1
-            if (gatePasses === 3){
-                if (fuelTanks.length < 3) fuelTanks.push(new FuelTank())
-                gatePasses = 0
-            }
-            
+            if (amountOfCars < carsInPlay.length) amountOfCars++;
+            gatePasses++;
+            if (gatePasses % 4 === 0){
+            if (fuelTanks.length < 4) fuelTanks.push(new FuelTank(gasTank));
+        }
         }
 
+        
+
         let overLapCheck = carsInPlay.filter(ele => ele !== car)
-        for (let i = 0; i < overLapCheck.length; i++){
+        if (gatePasses > 0){
+            for (let i = 0; i < overLapCheck.length; i++){
             if (car.collision(overLapCheck[i])){
                 car.respawn();
                 break
             }
         }
+        }
+        
     
         if (player.playerCollision(car)) {
-            amountOfCars--
             carsInPlay.splice(i, 1);
+            amountOfCars--
             lives -= 1;
         }
 
@@ -151,21 +163,19 @@ function animate() {
     fuelTanks.forEach(tank => {
         let tankIdx = fuelTanks.indexOf(tank);
         tank.draw(c);
-        // if (tank.passedGate() && fuelTanks.length < 4) fuelTanks.push(new FuelTank());
-        if (on) tank.move(vel)
+        if (on) tank.move(vel);
 
         for (let i = 0; i < amountOfCars; i++){
             const car = carsInPlay[i]
             if (tank.collision(car)) {
                 fuelTanks.splice(tankIdx, 1)
-                console.log("overlap")
                 break
             }
         };
 
         if (player.playerCollision(tank)) {
             fuelTanks.splice(tankIdx, 1)
-            if (fuel < 100) fuel += 5;
+            if (fuel < 95) fuel += 5;
         }
 
         if (tank.end(canHeight)) {
