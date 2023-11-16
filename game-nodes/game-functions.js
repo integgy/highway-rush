@@ -73,14 +73,6 @@ function edges(cxt){
     cxt.lineTo(middle + 275,canHeight);
     cxt.stroke();
 
-
-    //Car spawn gate
-    // c.beginPath();
-    // c.setLineDash([]);
-    // c.moveTo(middle + 275, 100)
-    // c.lineTo(287, 100);
-    // c.stroke();
-
 }
 
 function gameDetails(cxt, score, lives, fuel){
@@ -92,7 +84,7 @@ function gameDetails(cxt, score, lives, fuel){
     cxt.fillStyle = "black"
     cxt.fillText(`Lives: ${lives}`, 10, 100);
 
-    cxt.font = "48px serif";
+    cxt.font = "42px serif";
     cxt.fillStyle = "black"
     cxt.fillText(`Fuel: ${fuel}%`, 10, 150);
 }
@@ -105,16 +97,13 @@ function gameOver(cxt, score){
     cxt.font = "48px serif";
     cxt.fillStyle = "black"
     cxt.fillText(`Your Score: ${score}`, middle - 100, 350);
+}
 
+function instructions(cxt){
 
 }
 
-// function increaseDifficulty(score, vel){
-//     const levels = {
-//         10: 0.5,
-//         15: 
-//     }
-// }
+
 
 module.exports = {
     canHeight,

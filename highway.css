@@ -1,5 +1,9 @@
 body {
-    background-color: rgb(134, 130, 130);
+    /* background-color: rgb(134, 130, 130); */
+    background-image: url(game_imgs/background-with-night-city-neon-lights.jpg);
+    background-size: cover;
+    background-position: center;
+    /* background-repeat: no-repeat; */
 }
 
 header{
@@ -19,6 +23,14 @@ header{
     flex-direction: column;
     margin-left: 20%;
     margin-right: 20%;
+}
+
+#game canvas{
+    border: 1px solid;
+}
+
+.game-menu {
+    display: flex;
 }
 
 .title {

@@ -15,8 +15,19 @@ canvas.height = canHeight
 
 console.log("Webpack is running :)")
 
-const background = new Image()
-background.src = "../game_imgs/highway_img.png"
+// const background = new Image()
+// background.src = "../game_imgs/highway_img.png"
+
+function background(start, cxt){
+    const bg = new Image()
+    if (start) {
+        bg.src = "../game_imgs/start-screen.png"
+    } else {
+        bg.src = "../game_imgs/highway_img.png"
+    }
+    cxt.drawImage(bg, 0, 0, canWidth, canHeight);
+}
+
 
 const truck = new Image()
 truck.src = "../game_imgs/Mini_truck.png"
@@ -49,22 +60,19 @@ const carImgs = [
 ]
 
 function makeRandomCar(){
-
     const randomImg = carImgs[randomInt(carImgs.length)]
     return new NpcCar(randomImg)
 }
+
 // Player car
 const carImg = new Image()
 carImg.src = "../game_imgs/Car.png"
 const player = new Player(middle, canHeight - 125, carImg)
-let score = 0;
-let lives = 5;
-let fuel = 100;
-let vel = 1
+
 
 //Fuel timer
 setInterval(() => {
-    if (on) {
+    if (paused) {
         fuel -= 1
         if (vel > 4) fuel -= 1
         if (vel > 6) fuel -= 1
@@ -84,7 +92,8 @@ const levels = {
     120: 6,
     150: 7,
     200: 7.5,
-    300: 8
+    300: 8,
+    350: 9
 
 }
    
@@ -99,24 +108,45 @@ const keys = {
     }
 }
 
+
+
 // render Map and game logic
-const carsInPlay = [
-    new NpcCar(taxi),
-    // new NpcCar(semiTruck),
-    // new NpcCar(police)
-]
-const fuelTanks = []
-let on = false;
+let carsInPlay = [makeRandomCar()]
+let fuelTanks = []
+let score = 0;
+let lives = 5;
+let fuel = 100;
+let vel = 1
+
+function newGame(){
+    carsInPlay = [makeRandomCar()]
+    fuelTanks = []
+    score = 0;
+    lives = 5;
+    fuel = 100;
+    vel = 1
+}
+
+let paused = false;
 let running = true;
+let firstStart = true;
 let gatePasses = null;
+
+
+
+
 function animate() {
     if (lives < 1 || fuel < 1) running = false
     if (running) requestAnimationFrame(animate);
     c.clearRect(0, 0, canWidth, canHeight);
-    c.drawImage(background, 0, 0, canWidth, canHeight);
-    if (!running) gameOver(c, score);
-    player.draw(c);
-    gameDetails(c, score, lives, fuel)
+    background(firstStart, c)
+    if (!running) {
+        gameOver(c, score);
+    } else {
+        if (!firstStart) gameDetails(c, score, lives, fuel);
+    }
+   
+
     if (fuel < 90 && fuelTanks.length < 1) fuelTanks.push(new FuelTank(gasTank));
 
     if (keys.left.pressed) {
@@ -125,11 +155,11 @@ function animate() {
     if (keys.right.pressed) {
         if (player.x < middle + 240)player.x += 5
     }
-   
+    player.draw(c);
     for (let i = 0; i < carsInPlay.length; i++){
         const car = carsInPlay[i];
         car.draw(c);
-        if (on) car.move(vel)
+        if (paused) car.move(vel)
         if (car.passedGate(vel)) {
             gatePasses++;
             if (carsInPlay.length < 8) {
@@ -139,17 +169,18 @@ function animate() {
                     carsInPlay.push(new NpcCar(carImgs[i]))
                 }
             }
+
             if (gatePasses % 4 === 0)   {
                 if (fuelTanks.length < 4) fuelTanks.push(new FuelTank(gasTank));
-        }
+            }
         }
 
         
 
         let overLapCheck = carsInPlay.filter(ele => ele !== car)
         if (carsInPlay.length > 2){
-            for (let i = 0; i < overLapCheck.length; i++){
-            if (car.collision(overLapCheck[i])){
+            for (let i = 0; i < overLapCheck.length; i++) {
+            if (car.collision(overLapCheck[i])) {
                 car.respawn();
                 break
             }
@@ -167,7 +198,7 @@ function animate() {
             car.respawn();
             if (levels[score]) vel = levels[score];
         }
-                
+        
     }
 
 
@@ -175,12 +206,13 @@ function animate() {
     fuelTanks.forEach(tank => {
         let tankIdx = fuelTanks.indexOf(tank);
         tank.draw(c);
-        if (on) tank.move(vel);
+        if (paused) tank.move(vel);
 
         for (let i = 0; i < carsInPlay.length; i++){
             const car = carsInPlay[i]
             if (tank.collision(car)) {
                 fuelTanks.splice(tankIdx, 1)
+                break
             }
         };
 
@@ -194,11 +226,10 @@ function animate() {
         }
 
     })
-
-
 }
 
-animate();
+animate()
+
 
 window.addEventListener("keydown", e => {
     switch (e.key) {
@@ -228,6 +259,10 @@ window.addEventListener("click", e => {
 
 const startButton = document.querySelector('#start')
 startButton.addEventListener("click", e =>{
-    if (e.target.value) on = !on
+    if (e.target.value) { 
+        paused = !paused
+        firstStart = false
+        e.target.innerHTML = "Pause"
+    }
 })
 
