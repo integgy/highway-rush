@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    
+
     <div class="links">
         <a href="https://github.com/integgy">
             <img src="icons/github.256x249.png" alt="">
@@ -19,11 +19,20 @@
         </a>
     </div>
     
-    <div id="game">
+    <div class="game">
         <img class="title" src="game_imgs/title_white.png" alt="">
         <canvas></canvas>
         <div class="game-menu">
-            <button id="start" value="true">start</button>
+            
+            <div class="fuel-container">
+                <p>E</p>
+                <div class="fuel-under">
+                    <div class="fuel-meter"></div>
+                </div>
+                <p>F</p>
+            </div>           
+            <button id="start" value="start">start</button>
+            <p class="game-lives" ></p>
         </div>
         
     </div>

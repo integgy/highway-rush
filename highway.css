@@ -3,47 +3,44 @@ body {
     background-image: url(game_imgs/background-with-night-city-neon-lights.jpg);
     background-size: cover;
     background-position: center;
-    /* background-repeat: no-repeat; */
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+
 }
 
-header{
-    background-color: red;
-    width: 100%;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-}
 
-/* .title{
-    height: 15vh;
-} */
-
-#game {
+.game {
     display: flex;
     flex-direction: column;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
-#game canvas{
+.game canvas{
     border: 1px solid;
 }
 
 .game-menu {
+    /* background-color: white; */
+    position: relative;
     display: flex;
-}
-
-.title {
-    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+    gap: 10;
 }
 
 
 .links {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 10px;
     width: 77px;
     position: absolute;
+    padding: 5px;
 }
 
 .links img{
@@ -51,3 +48,50 @@ header{
     height: 34px;
 }
 
+#start {
+    font-size: 12px;
+    font-family: "Readex Pro", sans-serif;
+    padding: 0.5em 1em;
+    margin: 0.25em;
+    border-radius: 1em;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: #dddddd;
+    margin-right: 19%;
+
+}
+
+/* fuel{
+    margin-right: 0;
+} */
+
+.fuel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3px;
+    width: 30%;
+    height: 100%;
+    margin-left: 2%;
+  
+}
+.game-lives{
+    margin-right: 2%;
+}   
+.fuel-meter {
+    width: 100%;
+    height: inherit;
+    background-color: rgb(96, 225, 96);
+}
+.fuel-under {
+    height: 15px;
+    width: 100%;
+    background-color: red; 
+    border: 1px solid;
+}
+
+p {
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

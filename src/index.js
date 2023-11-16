@@ -1,12 +1,14 @@
 import Player from "../game-nodes/player-car"
 import NpcCar from "../game-nodes/incoming-traffic.js"
-import {uniqueInt, randomInt, gameOver, gameDetails} from "../game-nodes/game-functions"
+import {randomInt, gameOver, gameDetails} from "../game-nodes/game-functions"
 import { canHeight, canWidth, middle } from "../game-nodes/game-functions"
 import FuelTank from "../game-nodes/fuel.js"
 
 
-
+const startButton = document.querySelector('#start')
 const canvas = document.querySelector("canvas")
+const playerFuel = document.querySelector(".fuel-meter")
+const playerLives = document.querySelector(".game-lives")
 const c = canvas.getContext("2d")
 
 
@@ -15,20 +17,17 @@ canvas.height = canHeight
 
 console.log("Webpack is running :)")
 
-// const background = new Image()
-// background.src = "../game_imgs/highway_img.png"
-
 function background(start, cxt){
-    const bg = new Image()
     if (start) {
         bg.src = "../game_imgs/start-screen.png"
     } else {
         bg.src = "../game_imgs/highway_img.png"
     }
+    cxt.clearRect(0, 0, canWidth, canHeight);
     cxt.drawImage(bg, 0, 0, canWidth, canHeight);
 }
 
-
+// Car imgs
 const truck = new Image()
 truck.src = "../game_imgs/Mini_truck.png"
 
@@ -47,6 +46,8 @@ redCar.src = "../game_imgs/Audi.png"
 const blackCar = new Image()
 blackCar.src = "../game_imgs/Black_viper.png"
 
+
+
 const gasTank = new Image()
 gasTank.src = "../game_imgs/gas_tank.png"
 
@@ -64,10 +65,10 @@ function makeRandomCar(){
     return new NpcCar(randomImg)
 }
 
-// Player car
+
 const carImg = new Image()
 carImg.src = "../game_imgs/Car.png"
-const player = new Player(middle, canHeight - 125, carImg)
+
 
 
 //Fuel timer
@@ -98,7 +99,6 @@ const levels = {
 }
    
 // Movement
-
 const keys = {
     left:{
         pressed: false
@@ -109,8 +109,24 @@ const keys = {
 }
 
 
+function newGame(button){
+    carsInPlay = [makeRandomCar()]
+    fuelTanks = [];
+    score = 0;
+    lives = 5;
+    fuel = 100;
+    vel = 1;
+    paused = true;
+    running = true;
+    button.value = 'pause';
+    button.innerHTML = "Pause";
+    animate()
+}
 
-// render Map and game logic
+
+
+// Player car and game details
+const player = new Player(middle, canHeight - 125, carImg)
 let carsInPlay = [makeRandomCar()]
 let fuelTanks = []
 let score = 0;
@@ -118,36 +134,32 @@ let lives = 5;
 let fuel = 100;
 let vel = 1
 
-function newGame(){
-    carsInPlay = [makeRandomCar()]
-    fuelTanks = []
-    score = 0;
-    lives = 5;
-    fuel = 100;
-    vel = 1
-}
 
+let bg = new Image()
 let paused = false;
 let running = true;
 let firstStart = true;
 let gatePasses = null;
 
-
-
-
+// render Map and game logic
 function animate() {
-    if (lives < 1 || fuel < 1) running = false
+    playerFuel.style.width = `${fuel}%`
+    playerLives.innerHTML = `Lives: ${lives}`
+    if (lives < 1 || fuel < 1) {
+        running = false
+        paused = false
+    }
+    
     if (running) requestAnimationFrame(animate);
-    c.clearRect(0, 0, canWidth, canHeight);
     background(firstStart, c)
     if (!running) {
         gameOver(c, score);
-    } else {
-        if (!firstStart) gameDetails(c, score, lives, fuel);
+        startButton.innerHTML = "restart";
+        startButton.value = "restart"
+    } else if (!firstStart) {
+         gameDetails(c, score, lives, fuel);
     }
    
-
-    if (fuel < 90 && fuelTanks.length < 1) fuelTanks.push(new FuelTank(gasTank));
 
     if (keys.left.pressed) {
         if (player.x > middle - 290) player.x -= 5
@@ -155,6 +167,7 @@ function animate() {
     if (keys.right.pressed) {
         if (player.x < middle + 240)player.x += 5
     }
+
     player.draw(c);
     for (let i = 0; i < carsInPlay.length; i++){
         const car = carsInPlay[i];
@@ -170,7 +183,7 @@ function animate() {
                 }
             }
 
-            if (gatePasses % 4 === 0)   {
+            if (gatePasses % 3 === 0 || gatePasses === 1)   {
                 if (fuelTanks.length < 4) fuelTanks.push(new FuelTank(gasTank));
             }
         }
@@ -180,11 +193,11 @@ function animate() {
         let overLapCheck = carsInPlay.filter(ele => ele !== car)
         if (carsInPlay.length > 2){
             for (let i = 0; i < overLapCheck.length; i++) {
-            if (car.collision(overLapCheck[i])) {
-                car.respawn();
-                break
+                if (car.collision(overLapCheck[i])) {
+                    car.respawn();
+                    break
+                }
             }
-        }
         }
         
     
@@ -226,6 +239,8 @@ function animate() {
         }
 
     })
+
+
 }
 
 animate()
@@ -253,16 +268,21 @@ window.addEventListener("keyup", e => {
     }
 })
 
-window.addEventListener("click", e => {
-    console.log(vel)
-})
 
-const startButton = document.querySelector('#start')
+
 startButton.addEventListener("click", e =>{
-    if (e.target.value) { 
+    if (e.target.value === "restart") {
+        newGame(e.target)
+    } else {
         paused = !paused
         firstStart = false
-        e.target.innerHTML = "Pause"
+        if (!paused){
+            e.target.innerHTML = "Continue"
+        } else {
+            e.target.innerHTML = "Pause"
+        }
+
     }
+    
 })
 
