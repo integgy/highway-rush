@@ -70,16 +70,6 @@ const carImg = new Image()
 carImg.src = "../game_imgs/Car.png"
 
 
-
-//Fuel timer
-setInterval(() => {
-    if (paused) {
-        fuel -= 1
-        if (vel > 4) fuel -= 1
-        if (vel > 6) fuel -= 1
-    }
-}, 1000);
-
 const levels = {
     8: 1.5,
     15: 2,
@@ -109,17 +99,25 @@ const keys = {
 }
 
 
-function newGame(button){
+function newGame(){
+    setInterval(() => {
+        if (paused) {
+            fuel -= .5
+            if (vel > 1) fuel -= .5
+            if (vel > 4) fuel -= 1
+            if (vel > 6) fuel -= 1
+        }
+    }, 1000);
+
     carsInPlay = [makeRandomCar()]
     fuelTanks = [];
     score = 0;
     lives = 5;
     fuel = 100;
     vel = 1;
-    paused = true;
+    paused = false;
     running = true;
-    button.value = 'pause';
-    button.innerHTML = "Pause";
+    gatePasses = null;
     animate()
 }
 
@@ -127,19 +125,19 @@ function newGame(button){
 
 // Player car and game details
 const player = new Player(middle, canHeight - 125, carImg)
-let carsInPlay = [makeRandomCar()]
-let fuelTanks = []
-let score = 0;
-let lives = 5;
-let fuel = 100;
-let vel = 1
+let carsInPlay;
+let fuelTanks;
+let score;
+let lives;
+let fuel;
+let vel;
 
 
 let bg = new Image()
 let paused = false;
-let running = true;
+let running;
 let firstStart = true;
-let gatePasses = null;
+let gatePasses;
 
 // render Map and game logic
 function animate() {
@@ -224,7 +222,7 @@ function animate() {
         for (let i = 0; i < carsInPlay.length; i++){
             const car = carsInPlay[i]
             if (tank.collision(car)) {
-                fuelTanks.splice(tankIdx, 1)
+                tank.respawn()
                 break
             }
         };
@@ -243,7 +241,7 @@ function animate() {
 
 }
 
-animate()
+newGame()
 
 
 window.addEventListener("keydown", e => {
@@ -271,15 +269,20 @@ window.addEventListener("keyup", e => {
 
 
 startButton.addEventListener("click", e =>{
-    if (e.target.value === "restart") {
-        newGame(e.target)
+    if (startButton.value === "restart") {
+        startButton.innerHTML = "Pause"
+        startButton.value = "pause"
+        newGame()
+        paused = true
     } else {
         paused = !paused
         firstStart = false
         if (!paused){
-            e.target.innerHTML = "Continue"
+            startButton.innerHTML = "Continue"
+            startButton.value = "continue"
         } else {
-            e.target.innerHTML = "Pause"
+            startButton.innerHTML = "Pause"
+            startButton.value = "pause"
         }
 
     }
