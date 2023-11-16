@@ -19,9 +19,9 @@ console.log("Webpack is running :)")
 
 function background(start, cxt){
     if (start) {
-        bg.src = "../../game_imgs/start-screen.png"
+        bg.src = "../game_imgs/start-screen.png"
     } else {
-        bg.src = "../../game_imgs/highway_img.png"
+        bg.src = "../game_imgs/highway_img.png"
     }
     cxt.clearRect(0, 0, canWidth, canHeight);
     cxt.drawImage(bg, 0, 0, canWidth, canHeight);
