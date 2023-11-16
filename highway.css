@@ -1,5 +1,4 @@
 body {
-    /* background-color: rgb(134, 130, 130); */
     background-image: url(game_imgs/background-with-night-city-neon-lights.jpg);
     background-size: cover;
     background-position: center;
@@ -24,13 +23,11 @@ body {
 }
 
 .game-menu {
-    /* background-color: white; */
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 35px;
-    gap: 10;
+    height: 7vh;
 }
 
 
@@ -44,8 +41,8 @@ body {
 }
 
 .links img{
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
 }
 
 #start {
@@ -57,14 +54,10 @@ body {
     border: none;
     outline: none;
     cursor: pointer;
-    background: #dddddd;
-    margin-right: 19%;
+    background: grey;
+    margin-right: 20%;
 
 }
-
-/* fuel{
-    margin-right: 0;
-} */
 
 .fuel-container {
     display: flex;
@@ -73,11 +66,11 @@ body {
     gap: 3px;
     width: 30%;
     height: 100%;
-    margin-left: 2%;
+    margin-left: 2px;
   
 }
 .game-lives{
-    margin-right: 2%;
+    margin-right: 2px;
 }   
 .fuel-meter {
     width: 100%;

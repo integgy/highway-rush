@@ -63,6 +63,13 @@ In addition, this project will include:
 - Make necessary fixes and adjustments during testing.
 
 
+## Future to-dos
+- Add different patterns of cars
+- Tracking of player car to determine patters or incoming car spawns
+- Add music and sound affects
+- More animations when cars are moving
+
+
 
 
 
