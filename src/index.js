@@ -1,6 +1,6 @@
 import Player from "../game-nodes/player-car"
 import NpcCar from "../game-nodes/incoming-traffic.js"
-import {randomInt, gameOver, gameDetails} from "../game-nodes/game-functions"
+import { randomInt, gameOver, gameDetails } from "../game-nodes/game-functions"
 import { canHeight, canWidth, middle } from "../game-nodes/game-functions"
 import FuelTank from "../game-nodes/fuel.js"
 
@@ -15,7 +15,6 @@ const c = canvas.getContext("2d")
 canvas.width = canWidth
 canvas.height = canHeight
 
-console.log("Webpack is running :)")
 
 function background(start, cxt){
     if (start) {
@@ -87,6 +86,7 @@ const levels = {
     350: 9
 
 }
+
    
 // Movement
 const keys = {
@@ -100,6 +100,7 @@ const keys = {
 
 
 function newGame(){
+
     setInterval(() => {
         if (paused) {
             fuel -= .5
@@ -134,7 +135,7 @@ let vel;
 
 
 let bg = new Image()
-let paused = false;
+let paused;
 let running;
 let firstStart = true;
 let gatePasses;

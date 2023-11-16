@@ -34,7 +34,7 @@ class FuelTank {
 
     respawn(){
         this.x = randomXPos(this.l)
-        this.y = -100
+        this.y = -50
     }
 
     passedGate() {

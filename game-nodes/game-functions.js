@@ -32,33 +32,20 @@ function uniqueInt(max, previous) {
 
 
 function gameDetails(cxt, score, lives, fuel){
-    cxt.font = "48px serif";
+    cxt.font = "48px Bebas Neue";
     cxt.fillStyle = "white"
     cxt.fillText(`Score: ${score}`, 10, 50);
-
-    // cxt.font = "48px serif";
-    // cxt.fillStyle = "black"
-    // cxt.fillText(`Lives: ${lives}`, 10, 100);
-
-    // cxt.font = "42px serif";
-    // cxt.fillStyle = "black"
-    // cxt.fillText(`Fuel: ${fuel}%`, 10, 150);
 }
 
 function gameOver(cxt, score){
-    cxt.font = "48px serif";
-    cxt.fillStyle = "black"
+    cxt.font = "48px Bebas Neue";
+    cxt.fillStyle = "white"
     cxt.fillText("Game Over", middle - 120, 300);
 
-    cxt.font = "48px serif";
-    cxt.fillStyle = "black"
+    cxt.font = "48px Bebas Neue";
+    cxt.fillStyle = "white"
     cxt.fillText(`Your Score: ${score}`, middle - 140, 350);
 }
-
-function instructions(cxt){
-
-}
-
 
 
 module.exports = {

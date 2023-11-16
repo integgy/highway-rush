@@ -50,7 +50,7 @@ body {
 
 #start {
     font-size: 12px;
-    font-family: "Readex Pro", sans-serif;
+    font-family: 'Bebas Neue', sans-serif;
     padding: 0.5em 1em;
     margin: 0.25em;
     border-radius: 1em;
@@ -93,5 +93,5 @@ body {
 
 p {
     color: white;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'Bebas Neue', sans-serif;
 }
