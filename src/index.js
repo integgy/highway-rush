@@ -29,27 +29,27 @@ function background(start, cxt){
 
 // Car imgs
 const truck = new Image()
-truck.src = "../game_imgs/Mini_truck.png"
+truck.src = "./game_imgs/Mini_truck.png"
 
 const taxi = new Image()
-taxi.src = "../game_imgs/taxi.png"
+taxi.src = "./game_imgs/taxi.png"
 
 const semiTruck = new Image()
-semiTruck.src = "../game_imgs/truck.png"
+semiTruck.src = "./game_imgs/truck.png"
 
 const police = new Image()
-police.src = "../game_imgs/Police.png"
+police.src = "./game_imgs/Police.png"
 
 const redCar = new Image()
-redCar.src = "../game_imgs/Audi.png"
+redCar.src = "./game_imgs/Audi.png"
 
 const blackCar = new Image()
-blackCar.src = "../game_imgs/Black_viper.png"
+blackCar.src = "./game_imgs/Black_viper.png"
 
 
 
 const gasTank = new Image()
-gasTank.src = "../game_imgs/gas_tank.png"
+gasTank.src = "./game_imgs/gas_tank.png"
 
 const carImgs = [
     blackCar,
@@ -67,7 +67,7 @@ function makeRandomCar(){
 
 
 const carImg = new Image()
-carImg.src = "../game_imgs/Car.png"
+carImg.src = "./game_imgs/Car.png"
 
 
 const levels = {
