@@ -41,12 +41,12 @@ body {
 }
 
 .links img{
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
 }
 
 #start {
-    font-size: 12px;
+    font-size: 23px;
     font-family: 'Bebas Neue', sans-serif;
     padding: 0.5em 1em;
     margin: 0.25em;
@@ -78,7 +78,7 @@ body {
     background-color: rgb(96, 225, 96);
 }
 .fuel-under {
-    height: 15px;
+    height: 30px;
     width: 100%;
     background-color: red; 
     border: 1px solid;
@@ -87,4 +87,5 @@ body {
 p {
     color: white;
     font-family: 'Bebas Neue', sans-serif;
+    font-size: 35px;
 }
