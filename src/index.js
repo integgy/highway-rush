@@ -70,20 +70,21 @@ carImg.src = "./game_imgs/Car.png"
 
 
 const levels = {
-    8: .5,
-    15: .7,
-    20: 1,
-    30: 1.2,
-    40: 1.5,
-    50: 1.7,
-    60: 2,
-    70: 2.2,
-    100: 2.5,
-    120: 2.7,
-    150: 3,
-    200: 3.2,
-    300: 3.7,
-    350: 4.3
+    8: 1.5,
+    15: 2,
+    20: 2.5,
+    30: 3,
+    40: 3.5,
+    50: 4,
+    60: 4.5,
+    70: 5,
+    100: 5.5,
+    120: 6,
+    150: 7,
+    200: 7.5,
+    300: 8,
+    350: 9
+
 }
 
    
@@ -114,7 +115,7 @@ function newGame(){
     score = 0;
     lives = 5;
     fuel = 100;
-    vel = .3;
+    vel = 1;
     paused = false;
     running = true;
     gatePasses = null;
@@ -160,10 +161,10 @@ function animate() {
    
 
     if (keys.left.pressed) {
-        if (player.x > middle - 290) player.x -= 2
+        if (player.x > middle - 290) player.x -= 5
     }
     if (keys.right.pressed) {
-        if (player.x < middle + 240)player.x += 2
+        if (player.x < middle + 240)player.x += 5
     }
 
     player.draw(c);
@@ -173,7 +174,7 @@ function animate() {
         if (paused) car.move(vel)
         if (car.passedGate(vel)) {
             gatePasses++;
-            if (carsInPlay.length < 7) {
+            if (carsInPlay.length < 8) {
                 if (carsInPlay.length > 6){
                     if (gatePasses % 3 === 0) carsInPlay.push(makeRandomCar())
                 } else {
@@ -269,7 +270,6 @@ window.addEventListener("keyup", e => {
 
 
 startButton.addEventListener("click", e =>{
-    // startButton.innerHTML === "start" ? newGame() : null
     if (startButton.value === "restart") {
         startButton.innerHTML = "Pause"
         startButton.value = "pause"
@@ -285,6 +285,7 @@ startButton.addEventListener("click", e =>{
             startButton.innerHTML = "Pause"
             startButton.value = "pause"
         }
+
     }
     
 })
